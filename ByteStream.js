@@ -53,10 +53,10 @@ ByteStream = new Class(
 	execVBScript: function()
 	{
 		var text = "Function VB_Binary_getByteAt(strBinary, iOffset)\r\n"
-			+ "	IEBinary_getByteAt = AscB(MidB(strBinary, iOffset+1,1))\r\n"
+			+ "	VB_Binary_getByteAt = AscB(MidB(strBinary, iOffset+1,1))\r\n"
 			+ "End Function\r\n"
 			+ "Function VB_Binary_getLength(strBinary)\r\n"
-			+ "	IEBinary_getLength = LenB(strBinary)\r\n"
+			+ "	VB_Binary_getLength = LenB(strBinary)\r\n"
 			+ "End Function\r\n";
 			
 		if(window.execScript)
