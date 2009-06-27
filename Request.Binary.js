@@ -1,7 +1,10 @@
 /*
  Script: Request.Binary.js
  	Extends the basic Request Class with additional methods for interacting with binary responses.
- 
+  	
+ Copyright:
+ 	Copyright (c) 2009 Dipl.-Ing. (FH) André Fiedler <kontakt@visualdrugs.net>
+ 	
  License:
  	MIT-style license.
  */
