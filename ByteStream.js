@@ -19,18 +19,18 @@ ByteStream = new Class({
     
     initialize: function(data, options){
         this.data = data;
+        this.setOptions(options);
+		
 		this.use_vb_script = false;
         
         if ($type(data) == 'string') {
-            options.length = options.length || data.length; 
+            this.options.length = this.options.length || data.length; 
         }
         else {
             this.execVBScript();
 			if(this.use_vb_script)
-            	options.length = options.length || VB_Binary_getLength(data);
+            	this.options.length = this.options.length || VB_Binary_getLength(data);
         }
-        
-        this.setOptions(options);
     },
     
     getRawData: function(){
