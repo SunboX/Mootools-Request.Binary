@@ -16,7 +16,7 @@ ByteStream = new Class({
 	
     options: {
         offset: 0,
-        length: 0
+        length: null
     },
     
     initialize: function(data, options){
