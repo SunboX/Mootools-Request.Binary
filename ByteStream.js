@@ -9,6 +9,9 @@
  Based on Binary Ajax 0.1.5, Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
  */
 ByteStream = new Class({
+	
+	Implements: [Events, Options],
+	
     options: {
         offset: 0,
         length: 0
@@ -16,15 +19,15 @@ ByteStream = new Class({
     
     initialize: function(data, options){
         this.data = data;
+		this.use_vb_script = false;
         
         if ($type(data) == 'string') {
-            options.length = options.length || data.length;
-            this.use_vb_script = false;
+            options.length = options.length || data.length; 
         }
         else {
             this.execVBScript();
-            options.length = options.length || VB_Binary_getLength(data);
-            this.use_vb_script = true;
+			if(this.use_vb_script)
+            	options.length = options.length || VB_Binary_getLength(data);
         }
         
         this.setOptions(options);
@@ -106,22 +109,19 @@ ByteStream = new Class({
     },
     
     execVBScript: function(){
-        var text = "Function VB_Binary_getByteAt(strBinary, offset)\r\n" +
-        "	VB_Binary_getByteAt = AscB(MidB(strBinary, offset + 1,1))\r\n" +
-        "End Function\r\n" +
-        "Function VB_Binary_getLength(strBinary)\r\n" +
-        "	VB_Binary_getLength = LenB(strBinary)\r\n" +
-        "End Function\r\n";
-        
         if (window.execScript) {
-            window.execScript(text, 'vbscript');
+			var script = "Function VB_Binary_getByteAt(strBinary, offset)\r\n" +
+		        "	VB_Binary_getByteAt = AscB(MidB(strBinary, offset + 1,1))\r\n" +
+		        "End Function\r\n" +
+		        "Function VB_Binary_getLength(strBinary)\r\n" +
+		        "	VB_Binary_getLength = LenB(strBinary)\r\n" +
+		        "End Function\r\n";
+		
+            window.execScript(script, 'vbscript');
+			this.use_vb_script = true;
         }
         else {
-            var script = document.createElement('script');
-            script.setAttribute('type', 'text/vbscript');
-            script[(Browser.Engine.webkit && Browser.Engine.version < 420) ? 'innerText' : 'text'] = text;
-            document.head.appendChild(script);
-            document.head.removeChild(script);
+            this.fireEvent('exception', 'Type of data should be \'string\', given type is \'' + $type(this.data) + '\'');
         }
     }
 });
