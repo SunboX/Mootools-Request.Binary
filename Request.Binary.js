@@ -1,8 +1,9 @@
 /*
  Script: Request.Binary.js
- Extends the basic Request Class with additional methods for interacting with binary responses.
+ 	Extends the basic Request Class with additional methods for interacting with binary responses.
+ 
  License:
- MIT-style license.
+ 	MIT-style license.
  */
 Request.Binary = new Class({
     Extends: Request,
