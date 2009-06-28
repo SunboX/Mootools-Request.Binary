@@ -18,7 +18,7 @@ acceptRanges - (boolean) Try to perform a HTTP range request
 
 <b>for more information about options and usage see:</b>
 
-"Mootools Class: Request":http://mootools.net/docs/core/Request/Request
+[Mootools Class: Request]http://mootools.net/docs/core/Request/Request
 
 License
 ---
