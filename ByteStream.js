@@ -30,11 +30,12 @@ ByteStream = new Class({
         
         if (typeof this.data != 'string') {
             this.execVBScript();
-			if(this.use_vb_script)
+			if (this.use_vb_script) {
 				this.data = BinReader(this.data).toArray();
-				for(var i=0; i < this.data.length; i++)
+				for (var i = 0; i < this.data.length; i++) 
 					this.data[i] = String.fromCharCode(this.data[i]);
 				this.data = this.data.join('');
+			}
         }
 		
 		this.options.length = this.options.length || this.data.length;
