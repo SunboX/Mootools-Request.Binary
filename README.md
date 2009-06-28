@@ -12,8 +12,9 @@ Syntax
 Options
 ---
 
-range - (array[2]) startbit and endbit of the sequenz to download (can be used to download a file in more than one steps)
-acceptRanges - (boolean) try to perform a HTTP range request
+range - (array[2]) Startbit and endbit of the sequenz to download (can be used to download a file in more than one steps)
+
+acceptRanges - (boolean) Try to perform a HTTP range request
 
 for more information about options and usage see:
 
