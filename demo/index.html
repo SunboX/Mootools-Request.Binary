@@ -15,6 +15,7 @@
 				
 				req.addEvent('success', function(byteStream){
 					
+					$('size').set('text', (byteStream.getLength() / 1024) + ' kByte');
 					$('raw').set('text', byteStream.getRawData().replace(/\0/g, ''));
 					
 				});
@@ -26,6 +27,9 @@
 		
     </head>
     <body>
+    	<h1>File Size:</h1>
+		<pre id="size">Loading Data...</pre>
+		
         <h1>Raw Data:</h1>
 		<pre id="raw">Loading Data...</pre>
     </body>
