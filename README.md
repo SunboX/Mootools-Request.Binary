@@ -16,9 +16,9 @@ range - (array[2]) Startbit and endbit of the sequenz to download (can be used t
 
 acceptRanges - (boolean) Try to perform a HTTP range request
 
-for more information about options and usage see:
+<b>for more information about options and usage see:</b>
 
-http://mootools.net/docs/core/Request/Request
+"Mootools Class: Request":http://mootools.net/docs/core/Request/Request
 
 License
 ---
