@@ -50,7 +50,7 @@ ByteStream = new Class({
     },
     
     getByteAt: function(offset){
-        return this.data.charCodeAt(this.offset + offset) & 0xFF;
+        return this.data.charCodeAt(this.options.offset + offset) & 0xFF;
     },
     
     getSByteAt: function(offset){
