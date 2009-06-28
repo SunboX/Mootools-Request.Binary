@@ -18,6 +18,7 @@ Request.Binary = new Class({
     Extends: Request,
     
     options: {
+		method: 'get',
         range: [],
 		acceptRanges: null,
 		fileSize: null
@@ -25,6 +26,9 @@ Request.Binary = new Class({
     
     initialize: function(options){
         this.parent(options);
+		
+		if(this.xhr.onprogress)
+			this.xhr.onprogress = this.onProgress.bind(this);
     },
 	
 	getHeadAndSend: function(){
@@ -88,7 +92,13 @@ Request.Binary = new Class({
 		if (type == 'string' || type == 'element') options = {data: options};
 
 		var old = this.options;
-		options = $extend({url: old.url}, options);
+		options = $extend({data: old.data, url: old.url, method: old.method}, options);
+		var data = options.data, url = options.url, method = options.method;
+		
+		if (data && method == 'get'){
+			url = url + (url.contains('?') ? '&' : '?') + data;
+			data = null;
+		}
 		
 		var dataOffset = 0;
         if (options.range && options.range.length > 0 && !options.acceptRanges) {
@@ -134,24 +144,42 @@ Request.Binary = new Class({
             }.bind(this);
         }
 
-		this.xhr.open('GET', options.url, this.options.async);
+		this.xhr.open(method.toUpperCase(), url, this.options.async);
 
 		if (this.xhr.overrideMimeType) 
-            this.xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            this.xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
         
         if (options.range && options.range.length > 1 && options.acceptRanges) {
             this.xhr.setRequestHeader('Range', 'bytes=' + options.range[0] + '-' + options.range[1]);
         }
         
         this.xhr.setRequestHeader('If-Modified-Since', 'Sat, 1 Jan 1970 00:00:00 GMT');
-        
-		this.fireEvent('request');
-        this.xhr.send(null);
+		
+		if (data) {
+			if(this.xhr.sendAsBinary)
+			{
+				this.fireEvent('request');
+				this.xhr.sendAsBinary(data);
+			}
+			else {
+				this.failure();
+			}
+		}
+		else {
+			this.fireEvent('request');
+			this.xhr.send(null);
+		}
 		
 		return this;
 	},
+	
+	onProgress: function(e, fileSize){
+		if(e && e.lengthComputable) this.fireEvent('progress', {loaded: e.loaded, total: e.total}); 
+		if(fileSize) this.fireEvent('progress', {loaded: fileSize, total: fileSize});
+	},
     
     success: function(binary, fileSize){
+		this.onProgress(null, fileSize);
         this.onSuccess(binary, fileSize);
     }
 });

@@ -28,14 +28,16 @@ ByteStream = new Class({
 		
 		this.use_vb_script = false;
         
-        if (typeof data == 'string') {
-            this.options.length = this.options.length || data.length; 
-        }
-        else {
+        if (typeof this.data != 'string') {
             this.execVBScript();
 			if(this.use_vb_script)
-            	this.options.length = this.options.length || VB_Binary_getLength(data);
+				this.data = BinReader(this.data).toArray();
+				for(var i=0; i < this.data.length; i++)
+					this.data[i] = String.fromCharCode(this.data[i]);
+				this.data = this.data.join('');
         }
+		
+		this.options.length = this.options.length || this.data.length;
     },
     
     getRawData: function(){
@@ -47,9 +49,6 @@ ByteStream = new Class({
     },
     
     getByteAt: function(offset){
-        if (this.use_vb_script) 
-            return VB_Binary_getByteAt(this.data, this.offset + offset);
-        
         return this.data.charCodeAt(this.offset + offset) & 0xFF;
     },
     
@@ -115,11 +114,13 @@ ByteStream = new Class({
     
     execVBScript: function(){
         if (window.execScript) {
-			var script = "Function VB_Binary_getByteAt(strBinary, offset)\r\n" +
-		        "	VB_Binary_getByteAt = AscB(MidB(strBinary, offset + 1,1))\r\n" +
-		        "End Function\r\n" +
-		        "Function VB_Binary_getLength(strBinary)\r\n" +
-		        "	VB_Binary_getLength = LenB(strBinary)\r\n" +
+			var script = "Function BinReader(byteString)\r\n" +
+		        "	Dim i\r\n" +
+				"	ReDim byteArray(LenB(byteString))\r\n" +
+				"	For i = 1 To LenB(byteString)\r\n" +
+				"		byteArray(i-1) = AscB(MidB(byteString, i, 1))\r\n" +
+				"	Next\r\n" +
+				"	BinReader = byteArray\r\n" +
 		        "End Function\r\n";
 		
             window.execScript(script, 'vbscript');

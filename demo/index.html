@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>New Web Project</title>
+        
 		<script type="text/javascript" src="mootools-1.2.3-core.js"></script>
 		<script type="text/javascript" src="../ByteStream.js"></script>
 		<script type="text/javascript" src="../Request.Binary.js"></script>
@@ -15,7 +15,7 @@
 				
 				req.addEvent('success', function(byteStream){
 					
-					$('raw').set('text', byteStream.getRawData());
+					$('raw').set('text', byteStream.getRawData().replace(/\0/g, ''));
 					
 				});
 				
@@ -23,6 +23,7 @@
 			})
 			
 		</script>
+		
     </head>
     <body>
         <h1>Raw Data:</h1>
