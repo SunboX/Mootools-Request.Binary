@@ -1,7 +1,7 @@
 Request.Binary
 ===
 
-With Request.Binary you can request files in binary format trough an AJAX (XHR) call.
+With Request.Binary you can download files in binary format trough an AJAX (XHR) call.
 It requires Mootools and is tested with v1.2.3.
 
 Syntax
