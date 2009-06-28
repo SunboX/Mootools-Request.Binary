@@ -27,8 +27,7 @@ Request.Binary = new Class({
     initialize: function(options){
         this.parent(options);
 		
-		if(this.xhr.onprogress)
-			this.xhr.onprogress = this.onProgress.bind(this);
+		this.xhr.onprogress = this.onProgress.bind(this);
     },
 	
 	getHeadAndSend: function(){

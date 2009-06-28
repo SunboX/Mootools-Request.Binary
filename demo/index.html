@@ -13,6 +13,10 @@
 				
 				var req = new Request.Binary({url: 'demo.jpg'});
 				
+				req.addEvent('progress', function(status){
+					$('progress').set('text', 'Loaded: ' + (status.loaded / status.total * 100) + '%');
+				});
+				
 				req.addEvent('success', function(byteStream){
 					
 					$('size').set('text', (byteStream.getLength() / 1024) + ' kByte');
@@ -27,6 +31,8 @@
 		
     </head>
     <body>
+    	<div id="progress"></div>
+		
     	<h1>File Size:</h1>
 		<pre id="size">Loading Data...</pre>
 		
