@@ -25,7 +25,7 @@ ByteStream = new Class({
 		
 		this.use_vb_script = false;
         
-        if ($type(data) == 'string') {
+        if (typeof data == 'string') {
             this.options.length = this.options.length || data.length; 
         }
         else {
