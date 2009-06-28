@@ -7,6 +7,9 @@
  	
  License:
  	MIT-style license
+ 	
+ Version
+ 	0.9
  
  Credits:
  	Based on Binary Ajax 0.1.5, Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
@@ -24,7 +27,7 @@ Request.Binary = new Class({
         this.parent(options);
     },
 	
-	getHead: function(){
+	getHeadAndSend: function(){
         if (typeof(this.xhr.onload) != 'undefined') {
             this.xhr.onload = function(){
                 if (this.xhr.status == '200') {
