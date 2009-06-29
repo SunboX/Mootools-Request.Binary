@@ -145,8 +145,12 @@ Request.Binary = new Class({
 
 		this.xhr.open(method.toUpperCase(), url, this.options.async);
 
-		if (this.xhr.overrideMimeType) 
-            this.xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+		if (this.xhr.overrideMimeType) {
+			if (method == 'get')
+				this.xhr.overrideMimeType('text/plain; charset=x-user-defined');
+			else
+				this.xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+		} 
         
         if (options.range && options.range.length > 1 && options.acceptRanges) {
             this.xhr.setRequestHeader('Range', 'bytes=' + options.range[0] + '-' + options.range[1]);

@@ -90,7 +90,7 @@ ByteStream = new Class({
         if (ul > 2147483647) 
             return ul - 4294967296;
         else 
-            return iULong;
+            return ul;
     },
     
     getStringAt: function(offset, length){
