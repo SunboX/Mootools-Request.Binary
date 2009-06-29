@@ -14,9 +14,9 @@
  	Based on Binary Ajax 0.1.5, Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
  */
 ByteStream = new Class({
-	
-	Implements: [Events, Options],
-	
+
+    Implements: [Events, Options],
+    
     options: {
         offset: 0,
         length: null
@@ -25,20 +25,20 @@ ByteStream = new Class({
     initialize: function(data, options){
         this.data = data;
         this.setOptions(options);
-		
-		this.use_vb_script = false;
+        
+        this.use_vb_script = false;
         
         if (typeof this.data != 'string') {
             this.execVBScript();
-			if (this.use_vb_script) {
-				this.data = BinReader(this.data).toArray();
-				for (var i = 0; i < this.data.length; i++) 
-					this.data[i] = String.fromCharCode(this.data[i]);
-				this.data = this.data.join('');
-			}
+            if (this.use_vb_script) {
+                this.data = BinReader(this.data).toArray();
+                for (var i = 0; i < this.data.length; i++) 
+                    this.data[i] = String.fromCharCode(this.data[i]);
+                this.data = this.data.join('');
+            }
         }
-		
-		this.options.length = this.options.length || this.data.length;
+        
+        this.options.length = this.options.length || this.data.length;
     },
     
     getRawData: function(){
@@ -115,17 +115,17 @@ ByteStream = new Class({
     
     execVBScript: function(){
         if (window.execScript) {
-			var script = "Function BinReader(byteString)\r\n" +
-		        "	Dim i\r\n" +
-				"	ReDim byteArray(LenB(byteString))\r\n" +
-				"	For i = 1 To LenB(byteString)\r\n" +
-				"		byteArray(i-1) = AscB(MidB(byteString, i, 1))\r\n" +
-				"	Next\r\n" +
-				"	BinReader = byteArray\r\n" +
-		        "End Function\r\n";
-		
+            var script = "Function BinReader(byteString)\r\n" +
+            "	Dim i\r\n" +
+            "	ReDim byteArray(LenB(byteString))\r\n" +
+            "	For i = 1 To LenB(byteString)\r\n" +
+            "		byteArray(i-1) = AscB(MidB(byteString, i, 1))\r\n" +
+            "	Next\r\n" +
+            "	BinReader = byteArray\r\n" +
+            "End Function\r\n";
+            
             window.execScript(script, 'vbscript');
-			this.use_vb_script = true;
+            this.use_vb_script = true;
         }
         else {
             this.fireEvent('exception', 'Type of data should be \'string\', given type is \'' + $type(this.data) + '\'');
