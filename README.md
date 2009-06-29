@@ -4,6 +4,11 @@ Request.Binary
 With Request.Binary you can download files in binary format through an AJAX (XHR) call.
 It requires Mootools and is tested with v1.2.3.
 
+Demo
+---
+
+[http://visualdrugs.net/dev/request-binary/demo/](http://visualdrugs.net/dev/request-binary/demo/)
+
 Syntax
 ---
 
