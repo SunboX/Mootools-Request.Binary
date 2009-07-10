@@ -1,0 +1,60 @@
+
+/* ComBoo */
+
+.comBoo {
+    border: 0;
+}
+
+.comBoo-label {
+    background: #fff url(dropdown.gif) 93% 9px no-repeat;
+    font-size: 12px;
+    line-height: 18px;
+    border: #ccc 1px solid;
+    color: #000;
+    z-index: 9000;
+    height: 19px;
+    padding: 0;
+    padding-top: 1px;
+    cursor: pointer;
+    text-indent: 5px;
+    overflow: hidden;
+}
+
+a:hover.comBoo-label, a:active.comBoo-label {
+    text-decoration: none;
+}
+
+ul.comBoo-list {
+    z-index: 9001;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 0;
+    margin-top: 20px;
+    border: #ccc 1px solid;
+    width: auto;
+    background: #fff;
+}
+
+ul.comBoo-list li {
+    display: block;
+    min-width: 100px;
+    padding: 0;
+    margin: 0;
+    line-height: 20px;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 12px;
+    background: #fff;
+    color: #000;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+ul.comBoo-list li.selected {
+    background: #ccc;
+}
+
+ul.comBoo-list li.choice-selected {
+    background: #efefef;
+}
