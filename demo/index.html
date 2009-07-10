@@ -3,41 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		
-		<link type="text/css" rel="stylesheet" href="../ComBoo.css" />
-		
-		<link type="text/css" rel="stylesheet" href="../demo/style.css" />
-		<link type="text/css" rel="stylesheet" href="../demo/linux/style.css" />
-		<link type="text/css" rel="stylesheet" href="../demo/glossy/style.css" />
         
 		<script type="text/javascript" src="mootools-1.2.3-core.js"></script>
-		<script type="text/javascript" src="../ComBoo.js"></script>
+		<script type="text/javascript" src="../ByteStream.js"></script>
+		<script type="text/javascript" src="../Request.Binary.js"></script>
 		<script type="text/javascript">
 			
 			window.addEvent('domready', function(){
 				
-				/*
-				 * General
-				 */
-				$('combobox1').addEvent('change', function(){
-					alert(this.options[this.selectedIndex].value);
+				var req = new Request.Binary({url: 'demo.jpg'});
+				
+				req.addEvent('progress', function(status){
+					$('progress').set('text', 'Loaded: ' + (status.loaded / status.total * 100) + '%');
 				});
 				
-				new ComBoo('combobox1');
-				
-				/*
-				 * Glossy Style
-				 */
-				new ComBoo('combobox_glossy', {className: 'glossyCombobox'});
-				
-				/*
-				 * Linux Style
-				 */
-				new ComBoo('combobox_linux', {className: 'linuxCombobox'});
-				
-				$('open_linux_combobox').addEvent('click', function(){
-					$('combobox_linux').retrieve('linuxCombobox').open();
+				req.addEvent('success', function(byteStream){
+					
+					$('size').set('text', (byteStream.getLength() / 1024) + ' kByte');
+					$('raw').set('text', byteStream.getRawData().replace(/\0/g, ''));
+					
 				});
+				
+				req.send();
 			})
 			
 		</script>
@@ -46,37 +33,12 @@
     <body>
     	<div id="progress"></div>
 		
-		<p>Get the Source at: <a href="http://github.com/SunboX/Mootools-ComBoo/">http://github.com/SunboX/Mootools-ComBoo/</a></p>
+		<p>Get the Source at: <a href="http://github.com/SunboX/Mootools-Request.Binary/">http://github.com/SunboX/Mootools-Request.Binary/</a></p>
 		
-		<div class="demo">
-	    	<select name="combobox1" id="combobox1">
-	    		<option value="1">Item One</option>
-				<option value="2">Item Two</option>
-				<option value="3" selected="selected">Item Three</option>
-				<option value="4">Item Four</option>
-				<option value="5">Item Five</option>
-	    	</select>
-		</div>
+    	<h1>File Size:</h1>
+		<pre id="size">Loading Data...</pre>
 		
-		<div class="demo">
-	    	<select name="combobox_glossy" id="combobox_glossy">
-	    		<option value="1">Item One</option>
-				<option value="2">Item Two</option>
-				<option value="3" selected="selected">Item Three</option>
-				<option value="4">Item Four</option>
-				<option value="5">Item Five</option>
-	    	</select>
-		</div>
-		
-		<div class="demo">
-			<select name="combobox_linux" id="combobox_linux">
-	    		<option value="1">Item One</option>
-				<option value="2">Item Two</option>
-				<option value="3" selected="selected">Item Three</option>
-				<option value="4">Item Four</option>
-				<option value="5">Item Five</option>
-	    	</select>
-			<input type="button" id="open_linux_combobox" value="Open this Box" />
-		</div>
+        <h1>Raw Data:</h1>
+		<pre id="raw">Loading Data...</pre>
     </body>
 </html>
